@@ -1,6 +1,6 @@
 'use strict';
 
-browser.webRequest.onHeadersReceived.addListener(
+browser.webRequest.onResponseStarted.addListener(
   (requestDetails) => {
     if (requestDetails.documentUrl !== undefined ||
       requestDetails.tabId < 0) return;
