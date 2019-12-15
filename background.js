@@ -2,8 +2,7 @@
 
 browser.webRequest.onResponseStarted.addListener(
   (requestDetails) => {
-    if (requestDetails.documentUrl !== undefined ||
-      requestDetails.tabId < 0) return;
+    if (requestDetails.tabId === -1) return;
     
     setTimeout(() => {
       if (requestDetails.fromCache) {
@@ -23,5 +22,8 @@ browser.webRequest.onResponseStarted.addListener(
       }
     }, 100);
   },
-  {urls: ["<all_urls>"]}
+  {
+    urls: ['<all_urls>'],
+    types: ['main_frame']
+  }
 );
