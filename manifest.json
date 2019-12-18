@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Show server IP",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Show server IP address on hover over the icon in the address bar",
   "background": {
     "scripts": ["background.js"]
@@ -14,6 +14,7 @@
   },
   "permissions": [
     "webRequest",
-    "<all_urls>"
+    "<all_urls>",
+    "clipboardWrite"
   ]
 }
