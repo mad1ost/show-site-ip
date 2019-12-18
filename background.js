@@ -23,7 +23,7 @@ browser.webRequest.onResponseStarted.addListener(
     }, 100);
   },
   {
-    urls: ['<all_urls>'],
+    urls: ['*://*/*'],
     types: ['main_frame']
   }
 );
