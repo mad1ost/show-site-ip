@@ -23,7 +23,21 @@ browser.webRequest.onResponseStarted.addListener(
     }, 100);
   },
   {
-    urls: ['<all_urls>'],
+    urls: ['*://*/*'],
     types: ['main_frame']
   }
 );
+
+browser.pageAction.onClicked.addListener((tab) => {
+  browser.pageAction.getTitle({
+    tabId: tab.id
+  }).then(title => {
+    const el = document.createElement('textarea');
+    el.textContent = title;
+    const body = document.body;
+    body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    body.removeChild(el);
+  });
+});

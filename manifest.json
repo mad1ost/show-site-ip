@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Show server IP",
-  "version": "0.2.0",
-  "description": "Show server IP address on hover over the icon in the address bar",
+  "version": "0.3.0",
+  "description": "Show server IP when hovering over the icon in the address bar and copy it to the clipboard when clicking",
   "background": {
     "scripts": ["background.js"]
   },
@@ -10,10 +10,11 @@
     "browser_style": true,
     "default_icon": "icons/ip.svg",
     "default_title": "Show server IP",
-    "show_matches": ["<all_urls>"]
+    "show_matches": ["*://*/*"]
   },
   "permissions": [
+    "*://*/*",
     "webRequest",
-    "<all_urls>"
+    "clipboardWrite"
   ]
 }
