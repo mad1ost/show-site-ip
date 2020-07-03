@@ -16,16 +16,16 @@ function changeIcon(tabId, details) {
     if (tab.fromCache) {
       browser.pageAction.setIcon({
         tabId: tabId,
-        path: 'icons/no-ip.svg',
+        path: 'icons/no-ip.svg'
       });
       browser.pageAction.setTitle({
         tabId: tabId,
-        title: 'Page was loaded from cache',
+        title: browser.i18n.getMessage('from_cache')
       });
     } else {
       browser.pageAction.setTitle({
         tabId: tabId,
-        title: tab.ip,
+        title: tab.ip
       });
     }
     tab.onResponseStarted = false;
