@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Show server IP",
-  "version": "1.0.0",
-  "description": "Show server IP when hovering over the icon in the address bar and copy it to the clipboard when clicking",
+  "name": "__MSG_extension_name__",
+  "version": "1.1.0",
+  "description": "__MSG_extension_description__",
   "icons": {
     "32": "icons/icon-32.png",
     "64": "icons/icon-64.png",
@@ -13,7 +13,7 @@
   },
   "page_action": {
     "default_icon": "icons/ip.svg",
-    "default_title": "Show server IP",
+    "default_title": "__MSG_default_title__",
     "show_matches": ["http://*/*", "https://*/*"]
   },
   "permissions": [
@@ -22,5 +22,6 @@
     "webRequest",
     "webNavigation",
     "clipboardWrite"
-  ]
+  ],
+  "default_locale": "en"
 }

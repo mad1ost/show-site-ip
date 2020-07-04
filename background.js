@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-let tabs = {};
+const tabs = {};
 
 function changeIcon(tabId, details) {
   if (!(tabId in tabs)) {
@@ -16,16 +16,16 @@ function changeIcon(tabId, details) {
     if (tab.fromCache) {
       browser.pageAction.setIcon({
         tabId: tabId,
-        path: 'icons/no-ip.svg',
+        path: "icons/no-ip.svg"
       });
       browser.pageAction.setTitle({
         tabId: tabId,
-        title: 'Page was loaded from cache',
+        title: browser.i18n.getMessage("from_cache")
       });
     } else {
       browser.pageAction.setTitle({
         tabId: tabId,
-        title: tab.ip,
+        title: tab.ip
       });
     }
     tab.onResponseStarted = false;
@@ -43,8 +43,8 @@ browser.webRequest.onResponseStarted.addListener(
     });
   },
   {
-    urls: ['http://*/*', 'https://*/*'],
-    types: ['main_frame']
+    urls: ["http://*/*", "https://*/*"],
+    types: ["main_frame"]
   }
 );
 
@@ -58,7 +58,7 @@ browser.webNavigation.onCommitted.addListener(
   {
     url: [
       {
-        schemes: ['http', 'https']
+        schemes: ["http", "https"]
       }
     ]
   }
@@ -73,11 +73,11 @@ browser.pageAction.onClicked.addListener((tab) => {
     tabId: tab.id
   }).then(title => {
     const body = document.body;
-    const textarea = document.createElement('textarea');
+    const textarea = document.createElement("textarea");
     textarea.textContent = title;
     body.appendChild(textarea);
     textarea.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     body.removeChild(textarea);
   });
 });
