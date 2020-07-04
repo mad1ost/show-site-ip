@@ -1,6 +1,6 @@
 "use strict";
 
-let tabs = {};
+const tabs = {};
 
 function changeIcon(tabId, details) {
   if (!(tabId in tabs)) {
