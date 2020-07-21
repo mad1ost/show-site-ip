@@ -1,64 +1,75 @@
-"use strict";
+'use strict';
 
 const tabs = {};
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts
+const blockedDomains = [
+  'accounts-static.cdn.mozilla.net',
+  'accounts.firefox.com',
+  'addons.cdn.mozilla.net',
+  'addons.mozilla.org',
+  'api.accounts.firefox.com',
+  'content.cdn.mozilla.net',
+  'content.cdn.mozilla.net',
+  'discovery.addons.mozilla.org',
+  'input.mozilla.org',
+  'install.mozilla.org',
+  'oauth.accounts.firefox.com',
+  'profile.accounts.firefox.com',
+  'support.mozilla.org',
+  'sync.services.mozilla.com',
+  'testpilot.firefox.com'
+];
 
-function changeIcon(tabId, details) {
+function changeIcon(tabId, details, event) {
   if (!(tabId in tabs)) {
-    tabs[tabId] = {
-      onResponseStarted: false,
-      onCommitted: false
-    };
+    tabs[tabId] = {};
   }
-  tabs[tabId] = Object.assign(tabs[tabId], details);
   const tab = tabs[tabId];
+  tab[event] = details;
   // wait until both callbacks have been completed
-  if (tab.onResponseStarted && tab.onCommitted) {
-    if (tab.fromCache) {
+  if ('onResponseStarted' in tab && 'onCommitted' in tab) {
+    if (tab.onResponseStarted.fromCache) {
       browser.pageAction.setIcon({
         tabId: tabId,
-        path: "icons/no-ip.svg"
+        path: 'icons/no-ip.svg'
       });
       browser.pageAction.setTitle({
         tabId: tabId,
-        title: browser.i18n.getMessage("from_cache")
+        title: browser.i18n.getMessage('from_cache')
       });
     } else {
       browser.pageAction.setTitle({
         tabId: tabId,
-        title: tab.ip
+        title: tab.onResponseStarted.ip
       });
     }
-    tab.onResponseStarted = false;
-    tab.onCommitted = false;
+    delete tab.onResponseStarted;
+    delete tab.onCommitted;
   }
 }
 
 browser.webRequest.onResponseStarted.addListener(
   (details) => {
     if (details.tabId === -1) return;
-    changeIcon(details.tabId, {
-      onResponseStarted: true,
-      fromCache: details.fromCache,
-      ip: details.ip
-    });
+    changeIcon(details.tabId, details, 'onResponseStarted');
   },
   {
-    urls: ["http://*/*", "https://*/*"],
-    types: ["main_frame"]
+    urls: ['http://*/*', 'https://*/*'],
+    types: ['main_frame']
   }
 );
 
 browser.webNavigation.onCommitted.addListener(
   (details) => {
     if (details.frameId !== 0) return;
-    changeIcon(details.tabId, {
-      onCommitted: true
-    });
+    const url = new URL(details.url);
+    if (blockedDomains.indexOf(url.hostname) !== -1) return;
+    changeIcon(details.tabId, details, 'onCommitted');
   },
   {
     url: [
       {
-        schemes: ["http", "https"]
+        schemes: ['http', 'https']
       }
     ]
   }
@@ -73,11 +84,11 @@ browser.pageAction.onClicked.addListener((tab) => {
     tabId: tab.id
   }).then(title => {
     const body = document.body;
-    const textarea = document.createElement("textarea");
+    const textarea = document.createElement('textarea');
     textarea.textContent = title;
     body.appendChild(textarea);
     textarea.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     body.removeChild(textarea);
   });
 });
