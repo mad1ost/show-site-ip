@@ -10,5 +10,8 @@
   },
   "from_cache": {
     "message": "Page was loaded from cache"
+  },
+  "through_proxy": {
+    "message": "Page was loaded through a proxy server"
   }
 }

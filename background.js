@@ -41,6 +41,15 @@ function changeIcon(tabId, details, event) {
         tabId: tabId,
         title: browser.i18n.getMessage('from_cache')
       });
+    } else if (tab.onResponseStarted.proxyInfo !== null) {
+      browser.pageAction.setIcon({
+        tabId: tabId,
+        path: 'icons/no-ip.svg'
+      });
+      browser.pageAction.setTitle({
+        tabId: tabId,
+        title: browser.i18n.getMessage('through_proxy')
+      });
     } else {
       browser.pageAction.setTitle({
         tabId: tabId,
