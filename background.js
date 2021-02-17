@@ -19,8 +19,6 @@ const blockedDomains = [
   'sync.services.mozilla.com',
   'testpilot.firefox.com'
 ];
-const delay = 200;
-let timerId = 0;
 
 function changeIcon(tabId, details, event) {
   if (!(tabId in tabs)) {
@@ -30,7 +28,6 @@ function changeIcon(tabId, details, event) {
   tab[event] = details;
   if (!('onCommitted' in tab)) return;
   if ('onResponseStarted' in tab) {
-    clearTimeout(timerId);
     if (tab.onResponseStarted.timeStamp >= tab.onCommitted.timeStamp) return;
     if (tab.onResponseStarted.fromCache) {
       browser.pageAction.setIcon({
@@ -55,25 +52,24 @@ function changeIcon(tabId, details, event) {
         tabId: tabId,
         title: tab.onResponseStarted.ip
       });
-    }
-    delete tab.onResponseStarted;
-    delete tab.onCommitted;
-  } else {
-    clearTimeout(timerId);
-    timerId = setTimeout(() => {
-      if (tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) {
+      if (event === 'onResponseStarted'
+          && tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) {
         browser.pageAction.setIcon({
           tabId: tabId,
-          path: 'icons/no-ip.svg'
-        });
-        browser.pageAction.setTitle({
-          tabId: tabId,
-          title: browser.i18n.getMessage('from_cache')
+          path: 'icons/ip.svg'
         });
       }
-      delete tab.onResponseStarted;
-      delete tab.onCommitted;
-    }, delay);
+    }
+    delete tabs[tabId];
+  } else if (tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) {
+    browser.pageAction.setIcon({
+      tabId: tabId,
+      path: 'icons/no-ip.svg'
+    });
+    browser.pageAction.setTitle({
+      tabId: tabId,
+      title: browser.i18n.getMessage('from_cache')
+    });
   }
 }
 
