@@ -7,5 +7,8 @@
   },
   "from_cache": {
     "message": "La page a été chargée à partir du cache"
+  },
+  "through_proxy": {
+    "message": "La page a été chargée via un serveur proxy"
   }
 }
