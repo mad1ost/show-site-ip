@@ -1,8 +1,10 @@
 {
   "manifest_version": 2,
   "name": "__MSG_extension_name__",
-  "version": "1.3.0",
   "description": "__MSG_extension_description__",
+  "version": "1.3.1",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/mad1ost/show-server-ip",
   "icons": {
     "32": "icons/ip.svg",
     "64": "icons/ip.svg",
@@ -22,6 +24,5 @@
     "webRequest",
     "webNavigation",
     "clipboardWrite"
-  ],
-  "default_locale": "en"
+  ]
 }

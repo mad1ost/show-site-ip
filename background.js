@@ -20,7 +20,7 @@ const blockedDomains = [
   'testpilot.firefox.com'
 ];
 
-function changeIcon(tabId, details, event) {
+function updateIcon(tabId, details, event) {
   if (!(tabId in tabs)) {
     tabs[tabId] = {};
   }
@@ -76,7 +76,7 @@ function changeIcon(tabId, details, event) {
 browser.webRequest.onResponseStarted.addListener(
   (details) => {
     if (details.tabId === -1) return;
-    changeIcon(details.tabId, details, 'onResponseStarted');
+    updateIcon(details.tabId, details, 'onResponseStarted');
   },
   {
     urls: ['http://*/*', 'https://*/*'],
@@ -89,7 +89,7 @@ browser.webNavigation.onCommitted.addListener(
     if (details.frameId !== 0) return;
     const url = new URL(details.url);
     if (blockedDomains.indexOf(url.hostname) !== -1) return;
-    changeIcon(details.tabId, details, 'onCommitted');
+    updateIcon(details.tabId, details, 'onCommitted');
   },
   {
     url: [
