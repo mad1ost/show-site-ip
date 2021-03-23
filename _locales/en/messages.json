@@ -1,17 +1,17 @@
 {
   "extension_name": {
-    "message": "Show server IP"
+    "message": "Site IP"
   },
   "extension_description": {
-    "message": "Show server IP when hovering over the icon in the browser address bar and copy it to the clipboard when clicking"
+    "message": "Shows the site's IP address in the browser's address bar. Just hover your mouse over the icon to display it or click to copy."
   },
   "default_title": {
-    "message": "Show server IP"
+    "message": "Site's IP address"
   },
   "from_cache": {
-    "message": "Page was loaded from cache"
+    "message": "This page was loaded from cache"
   },
   "through_proxy": {
-    "message": "Page was loaded through a proxy server"
+    "message": "This page was loaded through a proxy server"
   }
 }
