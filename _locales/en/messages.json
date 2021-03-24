@@ -1,6 +1,6 @@
 {
   "extension_name": {
-    "message": "Site IP"
+    "message": "Show site IP"
   },
   "extension_description": {
     "message": "Shows the site's IP address in the browser's address bar. Just hover your mouse over the icon to display it or click to copy."

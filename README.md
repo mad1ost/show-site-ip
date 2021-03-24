@@ -1,10 +1,10 @@
-# Site IP
+# Show site IP
 
 ![Screenshot](https://addons.cdn.mozilla.net/user-media/previews/full/229/229056.png)
 
 Firefox extension that shows the site's IP address in the browser's address bar. Just hover your mouse over the icon to display it or click to copy.
 
-You can install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/site-ip/).
+You can install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/show-site-ip/).
 
 For faster IP display on hover open `about:config` and add the preference `ui.tooltipDelay` with the type `Number` and the value `100` (default is [500](https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference/ui.tooltipDelay)).
 
