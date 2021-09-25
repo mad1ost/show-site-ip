@@ -105,15 +105,8 @@ browser.tabs.onRemoved.addListener((tabId) => {
 });
 
 browser.pageAction.onClicked.addListener((tab) => {
-  browser.pageAction.getTitle({
+  let gettingTitle = browser.pageAction.getTitle({
     tabId: tab.id
-  }).then(title => {
-    const body = document.body;
-    const textarea = document.createElement('textarea');
-    textarea.textContent = title;
-    body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    body.removeChild(textarea);
   });
+  gettingTitle.then((title) => navigator.clipboard.writeText(title));
 });
