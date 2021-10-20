@@ -1,33 +1,30 @@
 'use strict';
 
 const tabs = {};
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Content_scripts
-const blockedDomains = [
-  'accounts-static.cdn.mozilla.net',
-  'accounts.firefox.com',
-  'addons.cdn.mozilla.net',
-  'addons.mozilla.org',
-  'api.accounts.firefox.com',
-  'content.cdn.mozilla.net',
-  'content.cdn.mozilla.net',
-  'discovery.addons.mozilla.org',
-  'input.mozilla.org',
-  'install.mozilla.org',
-  'oauth.accounts.firefox.com',
-  'profile.accounts.firefox.com',
-  'support.mozilla.org',
-  'sync.services.mozilla.com',
-  'testpilot.firefox.com'
-];
+let urlFilter = {};
 
-function updateIcon(tabId, details, event) {
+function updateIcon(details, event) {
+  const tabId = details.tabId;
   if (!(tabId in tabs)) {
-    tabs[tabId] = {};
+    tabs[tabId] = {
+      onResponseStarted: null,
+      onCommitted: null
+    }
   }
   const tab = tabs[tabId];
   tab[event] = details;
-  if (!('onCommitted' in tab)) return;
-  if ('onResponseStarted' in tab) {
+  if (tab.onCommitted && tab.onResponseStarted === null) {
+    if (details.transitionQualifiers.indexOf('forward_back') !== -1) { // bfcache
+      browser.pageAction.setIcon({
+        tabId: details.tabId,
+        path: 'icons/no-ip.svg'
+      });
+      browser.pageAction.setTitle({
+        tabId: details.tabId,
+        title: browser.i18n.getMessage('from_cache')
+      });
+    }
+  } else if (tab.onCommitted && tab.onResponseStarted) {
     if (tab.onResponseStarted.timeStamp >= tab.onCommitted.timeStamp) return;
     if (tab.onResponseStarted.fromCache) {
       browser.pageAction.setIcon({
@@ -52,31 +49,15 @@ function updateIcon(tabId, details, event) {
         tabId: tabId,
         title: tab.onResponseStarted.ip
       });
-      if (event === 'onResponseStarted'
-          && tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) {
-        browser.pageAction.setIcon({
-          tabId: tabId,
-          path: 'icons/ip.svg'
-        });
-      }
     }
     delete tabs[tabId];
-  } else if (tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) {
-    browser.pageAction.setIcon({
-      tabId: tabId,
-      path: 'icons/no-ip.svg'
-    });
-    browser.pageAction.setTitle({
-      tabId: tabId,
-      title: browser.i18n.getMessage('from_cache')
-    });
   }
 }
 
 browser.webRequest.onResponseStarted.addListener(
   (details) => {
-    if (details.tabId === -1) return;
-    updateIcon(details.tabId, details, 'onResponseStarted');
+    if (details.frameId !== 0) return;
+    updateIcon(details, 'onResponseStarted');
   },
   {
     urls: ['http://*/*', 'https://*/*'],
@@ -87,9 +68,7 @@ browser.webRequest.onResponseStarted.addListener(
 browser.webNavigation.onCommitted.addListener(
   (details) => {
     if (details.frameId !== 0) return;
-    const url = new URL(details.url);
-    if (blockedDomains.indexOf(url.hostname) !== -1) return;
-    updateIcon(details.tabId, details, 'onCommitted');
+    updateIcon(details, 'onCommitted');
   },
   {
     url: [
