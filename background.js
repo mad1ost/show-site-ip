@@ -1,7 +1,6 @@
 'use strict';
 
 const tabs = {};
-let urlFilter = {};
 
 function updateIcon(details, event) {
   const tabId = details.tabId;
@@ -49,6 +48,12 @@ function updateIcon(details, event) {
         tabId: tabId,
         title: tab.onResponseStarted.ip
       });
+      if (tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) {
+        browser.pageAction.setIcon({
+          tabId: tabId,
+          path: 'icons/ip.svg'
+        });
+      }
     }
     delete tabs[tabId];
   }
