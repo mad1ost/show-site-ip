@@ -10,5 +10,8 @@
 	},
 	"through_proxy": {
 		"message": "Эта страница была загружена через прокси сервер"
+	},
+	"by_service_worker": {
+		"message": "Эта страница была загружена service worker"
 	}
 }

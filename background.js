@@ -10,23 +10,22 @@ function updateIcon(details, event) {
 	const tab = tabs[tabId];
 	tab[event] = details;
 	if (tab.onCommitted && tab.onResponseStarted === null) {
-		if (tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) { // bfcache
-			browser.pageAction.setIcon({ tabId: tabId, path: 'icons/no-ip.svg' });
-			browser.pageAction.setTitle({ tabId: tabId, title: browser.i18n.getMessage('from_cache') });
-		}
+		browser.pageAction.setIcon({ tabId: tabId, path: 'icons/no-ip.svg' });
+		browser.pageAction.setTitle({ tabId: tabId, title: browser.i18n.getMessage('by_service_worker') });
 	} else if (tab.onCommitted && tab.onResponseStarted) {
 		if (tab.onResponseStarted.timeStamp >= tab.onCommitted.timeStamp) return;
-		if (tab.onResponseStarted.fromCache) {
-			browser.pageAction.setIcon({ tabId: tabId, path: 'icons/no-ip.svg' });
-			browser.pageAction.setTitle({ tabId: tabId, title: browser.i18n.getMessage('from_cache') });
-		} else if (tab.onResponseStarted.proxyInfo !== null) {
+		if (tab.onResponseStarted.proxyInfo !== null) {
 			browser.pageAction.setIcon({ tabId: tabId, path: 'icons/no-ip.svg' });
 			browser.pageAction.setTitle({ tabId: tabId, title: browser.i18n.getMessage('through_proxy') });
-		} else {
+		} else if (tab.onResponseStarted.ip !== null && tab.onResponseStarted.fromCache === false) {
+			browser.pageAction.setIcon({ tabId: tabId, path: 'icons/ip.svg' });
 			browser.pageAction.setTitle({ tabId: tabId, title: tab.onResponseStarted.ip });
-			if (tab.onCommitted.transitionQualifiers.indexOf('forward_back') !== -1) {
-				browser.pageAction.setIcon({ tabId: tabId, path: 'icons/ip.svg' });
-			}
+		//} else if (tab.onResponseStarted.ip !== null && tab.onResponseStarted.fromCache == true || // 304 Not Modified
+		//	tab.onResponseStarted.ip === null && tab.onResponseStarted.fromCache == true || // bfcache
+		//	tab.onResponseStarted.ip === null && tab.onResponseStarted.fromCache == false) { // bug
+		} else {
+			browser.pageAction.setIcon({ tabId: tabId, path: 'icons/no-ip.svg' });
+			browser.pageAction.setTitle({ tabId: tabId, title: browser.i18n.getMessage('from_cache') });
 		}
 		delete tabs[tabId];
 	}
