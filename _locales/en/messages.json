@@ -1,17 +1,17 @@
 {
-  "extension_name": {
-    "message": "Show site IP"
-  },
-  "extension_description": {
-    "message": "Shows the site's IP address in the browser's address bar. Just hover your mouse over the icon to display it or click to copy."
-  },
-  "default_title": {
-    "message": "Site's IP address"
-  },
-  "from_cache": {
-    "message": "This page was loaded from cache"
-  },
-  "through_proxy": {
-    "message": "This page was loaded through a proxy server"
-  }
+	"extension_name": {
+		"message": "Show site IP"
+	},
+	"extension_description": {
+		"message": "Shows the site's IP address in the browser's address bar. Just hover your mouse over the icon to display it or click to copy."
+	},
+	"default_title": {
+		"message": "Site's IP address"
+	},
+	"from_cache": {
+		"message": "This page was loaded from cache"
+	},
+	"through_proxy": {
+		"message": "This page was loaded through a proxy server"
+	}
 }

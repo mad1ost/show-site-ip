@@ -1,28 +1,28 @@
 {
-  "manifest_version": 2,
-  "name": "__MSG_extension_name__",
-  "description": "__MSG_extension_description__",
-  "version": "1.5.3",
-  "default_locale": "en",
-  "homepage_url": "https://github.com/mad1ost/show-site-ip",
-  "icons": {
-    "32": "icons/ip.svg",
-    "64": "icons/ip.svg",
-    "128": "icons/ip.svg"
-  },
-  "background": {
-    "scripts": ["background.js"]
-  },
-  "page_action": {
-    "default_icon": "icons/ip.svg",
-    "default_title": "__MSG_default_title__",
-    "show_matches": ["http://*/*", "https://*/*"]
-  },
-  "permissions": [
-    "http://*/*",
-    "https://*/*",
-    "webRequest",
-    "webNavigation",
-    "clipboardWrite"
-  ]
+	"manifest_version": 2,
+	"name": "__MSG_extension_name__",
+	"description": "__MSG_extension_description__",
+	"version": "1.5.3",
+	"default_locale": "en",
+	"homepage_url": "https://github.com/mad1ost/show-site-ip",
+	"icons": {
+		"32": "icons/ip.svg",
+		"64": "icons/ip.svg",
+		"128": "icons/ip.svg"
+	},
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"page_action": {
+		"default_icon": "icons/ip.svg",
+		"default_title": "__MSG_default_title__",
+		"show_matches": ["http://*/*", "https://*/*"]
+	},
+	"permissions": [
+		"http://*/*",
+		"https://*/*",
+		"webRequest",
+		"webNavigation",
+		"clipboardWrite"
+	]
 }
