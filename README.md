@@ -1,6 +1,6 @@
 # Show site IP
 
-![Screenshot](https://addons.cdn.mozilla.net/user-media/previews/full/229/229056.png)
+![Screenshot](https://addons.mozilla.org/user-media/previews/full/229/229056.png)
 
 Firefox extension that shows the site's IP address in the browser's address bar. Just hover your mouse over the icon to display it or click to copy.
 
