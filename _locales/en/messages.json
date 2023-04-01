@@ -13,8 +13,5 @@
 	},
 	"through_proxy": {
 		"message": "This page was loaded through a proxy server"
-	},
-	"by_service_worker": {
-		"message": "This page was loaded by service worker"
 	}
 }

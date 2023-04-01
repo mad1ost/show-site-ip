@@ -11,7 +11,6 @@ function updateIcon(details, event) {
 	tab[event] = details;
 	if (tab.onCommitted && tab.onResponseStarted === null) {
 		browser.pageAction.setIcon({ tabId: tabId, path: 'icons/no-ip.svg' });
-		browser.pageAction.setTitle({ tabId: tabId, title: browser.i18n.getMessage('by_service_worker') });
 	} else if (tab.onCommitted && tab.onResponseStarted) {
 		if (tab.onResponseStarted.timeStamp >= tab.onCommitted.timeStamp) return;
 		if (tab.onResponseStarted.proxyInfo !== null) {
